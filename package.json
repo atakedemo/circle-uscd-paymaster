@@ -1,6 +1,7 @@
 {
   "name": "circle-uscd-paymaster",
   "version": "1.0.0",
+  "type": "module",
   "description": "USDCのPaymaster理解のため作成",
   "main": "index.js",
   "scripts": {
