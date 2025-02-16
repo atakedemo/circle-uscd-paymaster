@@ -19,7 +19,7 @@ import { eip2612Abi, eip2612Permit } from './permit-helpers.js';
 import fs from 'node:fs';
 
 const BASE_SEPOLIA_BUNDLER = `https://public.pimlico.io/v2/${baseSepolia.id}/rpc`;
-const BASE_SEPOLIA_USDC = '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d';
+const BASE_SEPOLIA_USDC = '0x036CbD53842c5426634e7929541eC2318f3dCF7e';
 const BASE_SEPOLIA_PAYMASTER = '0x31BE08D380A21fc740883c0BC434FcFc88740b58';
 const MAX_GAS_USDC = 1000000n; // 1 USDC
 
@@ -74,43 +74,6 @@ if (usdcBalance === 0n) {
   console.log(`Smart wallet has ${formatUnits(usdcBalance, 6)} USDC`);
 }
 
-export async function eip2612Permit({
-    token,
-    chain,
-    ownerAddress,
-    spenderAddress,
-    value
-}) {
-    return {
-        types: {
-        Permit: [
-            { name: 'owner', type: 'address' },
-            { name: 'spender', type: 'address' },
-            { name: 'value', type: 'uint256' },
-            { name: 'nonce', type: 'uint256' },
-            { name: 'deadline', type: 'uint256' }
-        ]
-        },
-        primaryType: 'Permit',
-        domain: {
-        name: await token.read.name(),
-        version: await token.read.version(),
-        chainId: chain.id,
-        verifyingContract: token.address
-        },
-        message: {
-        owner: ownerAddress,
-        spender: spenderAddress,
-        value,
-        nonce: await token.read.nonces([ownerAddress]),
-        // The paymaster cannot access block.timestamp due to 4337 opcode
-        // restrictions, so the deadline must be MAX_UINT256.
-        deadline: maxUint256
-        }
-    };
-}
-
-console.log('Constructing and signing permit...');
 
 const permitData = await eip2612Permit({
   token: usdc,
