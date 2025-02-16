@@ -31,6 +31,19 @@ npm install --save viem permissionless
 
 ### 2. テスト用のEOA作成
 
+index.jsを実行する
+
+「テスト用のUSDCが足りない」とエラーで怒られるので、"Owner address"（下記出力でいう0x8B080f6741A586f20dB0a8C20a12F66eBe2888Bb）に対して、次の手順でテスト用のUSDCを送金する
+
+```bash
+$ node index.js
+
+> Constructing and signing permit...
+> Connected to network, latest block is 21960065n
+> Owner address: 0x8B080f6741A586f20dB0a8C20a12F66eBe2888Bb
+> Smart wallet address: 0xe33777bA48C3e82AD42a0D0A12a8b7D9729b886A
+> Visit https://faucet.circle.com/ to fund the smart wallet address above (not the owner address) with some USDC on > > BASE Sepolia, then return here and run the script again.
+```
 
 **注記： EOA作成について**
 
