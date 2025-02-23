@@ -3,17 +3,11 @@ import {
     Chain,
     getContract, 
     erc20Abi,
-    http,
 } from 'viem';
-import { baseSepolia } from "viem/chains";
 import { toKernelSmartAccount　} from 'permissionless/accounts';
-import { 
-  createBundlerClient,
-  entryPoint07Address,
-} from 'viem/account-abstraction';
+import { entryPoint07Address } from 'viem/account-abstraction';
 import { publicClient } from './client';
 
-const BUNDLER_URL = `${process.env.NEXT_PUBLIC_BUNDLER_PREFIX}${baseSepolia.id}/rpc`;
 const BASE_SEPOLIA_USDC = process.env.NEXT_PUBLIC_BASE_SEPOLIA_USDC as `0x${string}`;
 
 interface Token {
@@ -65,10 +59,10 @@ export async function sendUSDC(to: string, amount: string) {
     };
 }
 
-export const bundlerClient = createBundlerClient({
-  client: publicClient,
-  transport: http(BUNDLER_URL)
-});
+// export const bundlerClient:BundlerClient = createBundlerClient({
+//   client: publicClient,
+//   transport: http(BUNDLER_URL)
+// });
 
 export const smartAccount = await toKernelSmartAccount({
     client: publicClient,
