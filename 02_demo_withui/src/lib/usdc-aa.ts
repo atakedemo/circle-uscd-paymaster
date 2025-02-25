@@ -4,7 +4,7 @@ import {
     getContract, 
     erc20Abi,
 } from 'viem';
-import { toKernelSmartAccount　} from 'permissionless/accounts';
+import { toSimpleSmartAccount　} from 'permissionless/accounts';
 import { entryPoint07Address } from 'viem/account-abstraction';
 import { publicClient } from './client';
 
@@ -64,11 +64,11 @@ export async function sendUSDC(to: string, amount: string) {
 //   transport: http(BUNDLER_URL)
 // });
 
-export const smartAccount = await toKernelSmartAccount({
+export const smartAccount = await toSimpleSmartAccount({
     client: publicClient,
     entryPoint: {
       address: entryPoint07Address,
       version: "0.7",
     },
-    owners: [window.ethereum!],
+    owner: window.ethereum!,
 })
