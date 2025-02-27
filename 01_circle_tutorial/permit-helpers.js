@@ -36,16 +36,16 @@ export async function eip2612Permit({
         },
         primaryType: 'Permit',
         domain: {
-        name: await token.read.name(),
-        version: await token.read.version(),
-        chainId: chain.id,
-        verifyingContract: token.address
+            name: await token.read.name(),
+            version: await token.read.version(),
+            chainId: chain.id,
+            verifyingContract: token.address
         },
         message: {
-        owner: ownerAddress,
-        spender: spenderAddress,
-        value,
-        nonce: await token.read.nonces([ownerAddress]),
+            owner: ownerAddress,
+            spender: spenderAddress,
+            value,
+            nonce: await token.read.nonces([ownerAddress]),
         // The paymaster cannot access block.timestamp due to 4337 opcode
         // restrictions, so the deadline must be MAX_UINT256.
         deadline: maxUint256

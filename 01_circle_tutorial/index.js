@@ -87,6 +87,8 @@ const wrappedPermitSignature = await account.signTypedData(permitData);
 const { signature: permitSignature } = parseErc6492Signature(
   wrappedPermitSignature
 );
+console.log(wrappedPermitSignature)
+console.log(permitSignature)
 
 console.log('Permit signature:', permitSignature);
 
