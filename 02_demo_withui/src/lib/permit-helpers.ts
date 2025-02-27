@@ -64,29 +64,27 @@ export const tokenAbi = [
   }
 ] as const
 export async function eip2612Permit({
-//   token,
+  token,
   chain,
   ownerAddress,
   spenderAddress,
   value,
 }: {
-//   token: ReturnType<typeof getContract>
+  token: ReturnType<typeof getContract>
   chain: Chain
   ownerAddress: Address
   spenderAddress: Address
   value: bigint
 }) {
-    const token = getContract({
-        client: publicClient,
-        address: BASE_SEPOLIA_USDC,
-        abi: [...erc20Abi, ...eip2612Abi]
-    });  
+    // const token = getContract({
+    //     client: publicClient,
+    //     address: BASE_SEPOLIA_USDC,
+    //     abi: [...erc20Abi, ...eip2612Abi, ...tokenAbi]
+    // });  
     const [nonce, name, version] = await Promise.all([
-        // token.read.nonces([ownerAddress]),
-        1,
+        token.read.nonces([ownerAddress]),
         token.read.name(),
-        // token.read.version(),
-        '1'
+        await token.read.version(),
     ])
     const domain: TypedDataDomain = {
         name,
