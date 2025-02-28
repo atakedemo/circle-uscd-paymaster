@@ -3,7 +3,7 @@ import { baseSepolia } from 'viem/chains'
 import { toEcdsaKernelSmartAccount } from 'permissionless/accounts'
 import { eip2612Permit, tokenAbi } from './permit-helpers'
 
-const MAX_GAS_USDC = 1000000n
+const MAX_GAS_USDC = BigInt(1000000)
 const BASE_SEPOLIA_PAYMASTER = process.env.NEXT_PUBLIC_BASE_SEPOLIA_PAYMASTER as `0x${string}`;
 const BASE_SEPOLIA_USDC = process.env.NEXT_PUBLIC_BASE_SEPOLIA_USDC as `0x${string}`;
 

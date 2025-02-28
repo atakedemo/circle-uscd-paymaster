@@ -23,14 +23,14 @@ const BASE_SEPOLIA_PAYMASTER = process.env.NEXT_PUBLIC_BASE_SEPOLIA_PAYMASTER as
 const BASE_SEPOLIA_USDC = process.env.NEXT_PUBLIC_BASE_SEPOLIA_USDC as `0x${string}`;
 const BUNDLER_URL = `${process.env.NEXT_PUBLIC_BUNDLER_PREFIX}${baseSepolia.id}/rpc?apikey=${process.env.NEXT_PUBLIC_API_KEY}`;
 const PRIVATE_KEY = process.env.NEXT_PUBLIC_PRIVATEKEY as `0x${string}`;
-const MAX_GAS_USDC = 1000000n
+const MAX_GAS_USDC = BigInt(1000000)
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
     try {
         const data = await request.json();
         console.log(data)
         const recipientAddress = data.recipientAddress
-        // const amount = BigInt(data.amount)
+        const amount = data.amount;
         const permitSignature = data.permitSignature
 
         const owner = privateKeyToAccount(PRIVATE_KEY)
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             to: usdc.address,
             abi: usdc.abi,
             functionName: 'transfer',
-            args: [recipientAddress, parseUnits("0.0001", 6)]
+            args: [recipientAddress, parseUnits(amount.toString(), 6)]
             }
         ]
         // Specify the USDC Token Paymaster
@@ -77,7 +77,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             [
                 0, // Reserved for future use
                 usdc.address, // Token address
-                // parseEther(MAX_GAS_USDC), // Max spendable gas in USDC
                 MAX_GAS_USDC,
                 permitSignature // EIP-2612 permit signature
             ]
@@ -99,8 +98,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         const { standard: fees } = await bundlerClient.request({
             method: 'pimlico_getUserOperationGasPrice' as any
         }) as { standard: { maxFeePerGas: `0x${string}`, maxPriorityFeePerGas: `0x${string}` } }
-        // const maxFeePerGas = hexToBigInt("0x15a4e6")
-        // const maxPriorityFeePerGas = hexToBigInt("0x15a11c")
         const maxFeePerGas = hexToBigInt(fees.maxFeePerGas)
         const maxPriorityFeePerGas = hexToBigInt(fees.maxPriorityFeePerGas)
         
@@ -146,8 +143,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         })
         console.log(userOpReceipt)
         return NextResponse.json({ 
-            message: "こんにちは、Next.js API！",
-            receipt: userOpReceipt.toString()
+            message: "Success",
+            hash: userOpHash.toString()
         });
     } catch(e) {
         console.log(e)

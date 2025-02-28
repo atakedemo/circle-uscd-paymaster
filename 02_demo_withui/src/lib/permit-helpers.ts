@@ -1,7 +1,4 @@
-import { Address, Chain, TypedDataDomain, getContract, erc20Abi } from 'viem'
-import { publicClient } from '@/lib/client';
-
-const BASE_SEPOLIA_USDC = process.env.NEXT_PUBLIC_BASE_SEPOLIA_USDC as `0x${string}`;
+import { Address, Chain, TypedDataDomain, getContract } from 'viem'
 
 export const eip2612Abi = [
   {
@@ -76,11 +73,6 @@ export async function eip2612Permit({
   spenderAddress: Address
   value: bigint
 }) {
-    // const token = getContract({
-    //     client: publicClient,
-    //     address: BASE_SEPOLIA_USDC,
-    //     abi: [...erc20Abi, ...eip2612Abi, ...tokenAbi]
-    // });  
     const [nonce, name, version] = await Promise.all([
         token.read.nonces([ownerAddress]),
         token.read.name(),
