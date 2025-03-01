@@ -22,7 +22,6 @@ export default function Home() {
           </> 
           :
           <>
-            <h1>Lets Transfer</h1>
             <Button onClick={() => disconnect()}>Disconnect</Button>
             <div>
                 {ensAvatar && <Image src={ensAvatar} />}

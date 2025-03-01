@@ -4,9 +4,7 @@ import {
     getContract, 
     erc20Abi,
 } from 'viem';
-import { toSimpleSmartAccount　} from 'permissionless/accounts';
 import { toEcdsaKernelSmartAccount } from 'permissionless/accounts'
-import { entryPoint07Address } from 'viem/account-abstraction';
 import { publicClient } from './client';
 
 const BASE_SEPOLIA_USDC = process.env.NEXT_PUBLIC_BASE_SEPOLIA_USDC as `0x${string}`;
@@ -59,15 +57,6 @@ export async function sendUSDC(to: string, amount: string) {
       args: [to, amount]
     };
 }
-
-// export const smartAccount = await toSimpleSmartAccount({
-//     client: publicClient,
-//     entryPoint: {
-//       address: entryPoint07Address,
-//       version: "0.7",
-//     },
-//     owner: window.ethereum!,
-// })
 
 export const smartAccount = await toEcdsaKernelSmartAccount({
   client: publicClient,
