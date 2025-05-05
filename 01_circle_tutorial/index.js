@@ -115,17 +115,18 @@ function sendUSDC(to, amount) {
     ]
   );
 
-  const additionalGasCharge = hexToBigInt(
-    (
-      await client.call({
-        to: paymaster,
-        data: encodeFunctionData({
-          abi: parseAbi(['function additionalGasCharge() returns (uint256)']),
-          functionName: 'additionalGasCharge'
-        })
-      })
-    ).data
-  );
+  // const additionalGasCharge = hexToBigInt(
+  //   (
+  //     await client.call({
+  //       to: paymaster,
+  //       data: encodeFunctionData({
+  //         abi: parseAbi(['function additionalGasCharge() returns (uint256)']),
+  //         functionName: 'additionalGasCharge'
+  //       })
+  //     })
+  //   ).data
+  // );
+  const additionalGasCharge = BigInt(20000)
   
   console.log(
     'Additional gas charge (paymasterPostOpGasLimit):',
